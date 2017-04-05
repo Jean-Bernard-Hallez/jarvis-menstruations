@@ -175,27 +175,9 @@ cycle_moyen_regle
 
 # ################ Je vérifier si le cycle moyen exite correspond au jour à enregistrer = aujourd'hui :
 
-lignenumero="$nbr_ligne_enregistree_regle"
-calculdiffentredeuxdate_regle_addition="0"
-
-while test  "$lignenumero" != "1"
-do
-nbr_ligne_enregistree_regle_lire3=`grep '' $cycle_regles_chemin | sed -n $lignenumero\p` # 2 ligne Num 3
-lignenumero=$(( $lignenumero - 1 ))
-nbr_ligne_enregistree_regle_lire2=`grep '' $cycle_regles_chemin | sed -n $lignenumero\p` # 1 ligne Num 2
-# Soustrait 2 date pour calculer le nombre de jour entre ces deux
-calculdiffentredeuxdate_regle=`echo $((($(date -d "$nbr_ligne_enregistree_regle_lire3" +%s)-$(date -d "$nbr_ligne_enregistree_regle_lire2" +%s))/86400))`
-# echo "-- différence entre les dates : $calculdiffentredeuxdate_regle"
-calculdiffentredeuxdate_regle_addition=$(( $calculdiffentredeuxdate_regle_addition + $calculdiffentredeuxdate_regle ))
-done
 
 
 # echo "-- l'addition de celle ci = $calculdiffentredeuxdate_regle_addition"
-
-# calcul la moyenne de jour entre plusieurs chiffre
-let calculdiffentredeuxdate_regle_addition="$calculdiffentredeuxdate_regle_addition / $(( $nbr_ligne_enregistree_regle - 1 ))"
-# echo "-- la moyenne = $calculdiffentredeuxdate_regle_addition"
-echo "$calculdiffentredeuxdate_regle_addition" > $cyclemoyen_chemin
 
 # ################ Je regarde si cette date est déja enregistré dans le fichier 
 # je dois vérifier si j'ai déja enregistré cette date si non je le fait !
@@ -469,9 +451,27 @@ resultat_proch_regle_court_sec=`date -d "$resultat_proch_regle_court" +%s`
 cycle_moyen_regle() {
 derniere_date_regle_court_sec=""
 nbr_ligne_enregistree_regle=`grep -n  '' $cycle_regles_chemin | wc -w`
+lignenumero="$nbr_ligne_enregistree_regle"
+calculdiffentredeuxdate_regle_addition="0"
+
+while test  "$lignenumero" != "1"
+do
+nbr_ligne_enregistree_regle_lire3=`grep '' $cycle_regles_chemin | sed -n $lignenumero\p` # 2 ligne Num 3
+lignenumero=$(( $lignenumero - 1 ))
+nbr_ligne_enregistree_regle_lire2=`grep '' $cycle_regles_chemin | sed -n $lignenumero\p` # 1 ligne Num 2
+# Soustrait 2 date pour calculer le nombre de jour entre ces deux
+calculdiffentredeuxdate_regle=`echo $((($(date -d "$nbr_ligne_enregistree_regle_lire3" +%s)-$(date -d "$nbr_ligne_enregistree_regle_lire2" +%s))/86400))`
+# echo "-- différence entre les dates : $calculdiffentredeuxdate_regle"
+calculdiffentredeuxdate_regle_addition=$(( $calculdiffentredeuxdate_regle_addition + $calculdiffentredeuxdate_regle ))
+done
+# calcul la moyenne de jour entre plusieurs chiffre
+let calculdiffentredeuxdate_regle_addition="$calculdiffentredeuxdate_regle_addition / $(( $nbr_ligne_enregistree_regle - 1 ))"
+# echo "-- la moyenne = $calculdiffentredeuxdate_regle_addition"
+echo "$calculdiffentredeuxdate_regle_addition" > $cyclemoyen_chemin
 derniere_date_regle_court=`grep '' $cycle_regles_chemin | sed -n $nbr_ligne_enregistree_regle\p`
 derniere_date_regle_court_sec=`date -d "$derniere_date_regle_court_sec" +%s`
 derniere_date_regle_long=`date -d "$derniere_date_regle_court" "+%A %d %B %Y"`
+
 }
 
 fichier_existe_enreg_regle() {
@@ -515,17 +515,19 @@ date_cycle_anne_regle=`echo "$nbr_ligne_enregistree_regle_lire_voix" | cut -d"/"
 say "$date_cycle_jour_regle $date_cycle_mois_regle_long 20$date_cycle_anne_regle"
 lignenumero=$(( $lignenumero -1 ))
 done
+
 }
 
 jv_pg_ct_cylemoyen_regle() {
 cheminacces_regle
 fichier_existe_regle
+cycle_moyen_regle
 cyclemoyen_regle=`cat $cyclemoyen_chemin`
 say "Votre cylce moyen enregistré actuellement est de $cyclemoyen_regle jours"
 }
 
 
-jv_pg_ct_envoicyvlesms() {
+jv_pg_ct_envoicyvleemail() {
 fichier_existe_regle
 On_est_le_regle
 calculdeovulation
