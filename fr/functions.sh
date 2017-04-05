@@ -27,10 +27,10 @@ jv_pg_ct_amour() {
 fichier_existe_regle
 On_est_le_regle
 date_utilisateur_regle=""
+cycle_moyen_regle
 calculdeovulation
 erreur_ligne_vide_regle
 resultat_date_regle
-cycle_moyen_regle
 Test_date_aujourdhui_regle_court=`date "+%m/%d/%Y"`
 Test_date_aujourdhui_regle_long=`date "+%A %d %B %Y"`
 Test_date_aujourdhui_regle_sec=`date +%s`
