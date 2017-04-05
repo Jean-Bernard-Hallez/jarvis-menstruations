@@ -2,11 +2,6 @@
 # Here you can create functions which will be available from the commands file
 # You can also use here user variables defined in your config file
 
-cheminacces_regle() {
-cycleemail_chemin="/home/pi/jarvis/plugins/jarvis-menstruations/cycleemail.txt"
-cycle_regles_chemin="/home/pi/jarvis/plugins/jarvis-menstruations/date_cycle_regles.txt"
-cyclemoyen_chemin="/home/pi/jarvis/plugins/jarvis-menstruations/cyclemoyen.txt"
-}
 
 jv_pg_ct_quand_regle() {
 fichier_existe_regle
@@ -19,6 +14,13 @@ date_utilisateur_regle="$derniere_date_regle_court"
 encore_jour_regle=$(($derniere_date_regle_court_sec - $date_aujourdhui_regle_sec ))
 encore_jour_regle=`date -d @$encore_jour_regle "+%d"`
 say "Vos Prochaines règles devraient être dans environ $encore_jour_regle jours soit vers le $resultat_proch_regle_long"
+}
+
+
+cheminacces_regle() {
+cycleemail_chemin="/home/pi/jarvis/plugins/jarvis-menstruations/cycleemail.txt"
+cycle_regles_chemin="/home/pi/jarvis/plugins/jarvis-menstruations/date_cycle_regles.txt"
+cyclemoyen_chemin="/home/pi/jarvis/plugins/jarvis-menstruations/cyclemoyen.txt"
 }
 
 jv_pg_ct_amour() {
@@ -487,6 +489,7 @@ fi
 }
 
 fichier_existe_regle() {
+cheminacces_regle
 if [ -f "$cycle_regles_chemin" ]; then # Si le fichier existe ? Remise à 0 du compteur si 2 fois Off
 return
 else
@@ -535,5 +538,6 @@ echo "Prochaine prévue vers le $resultat_proch_regle_long" >> $cycleemail_chemi
 echo "Ovulation vers $resultat_ovulation_long" >> $cycleemail_chemin
 echo "Votre choix avoir des enfants: $Souhait_Enfant" >> $cycleemail_chemin
 mpack -s "Résumé du cycle menstruel: " $cycleemail_chemin "$votreemail_cycle"
+sudo rm $cycleemail_chemin
 say "Votre Cylce menstruel a été envoyer par Email à $votreemail_cycle"
 }
