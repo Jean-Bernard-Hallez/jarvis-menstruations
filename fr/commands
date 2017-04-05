@@ -1,0 +1,15 @@
+*PROCHAINE*REGLE*==jv_pg_ct_quand_regle
+*FAI*AMOUR*==jv_pg_ct_amour
+*OVULATION*==jv_pg_ct_ovulation
+*LISTE*REGLE*==jv_pg_ct_liste_regle
+*CYCLE*MOYEN*==jv_pg_ct_cylemoyen_regle
+*ENVOI*CYCLE*MAIL*==jv_pg_ct_envoicyvlesms
+*ENREGISTRE*REGLE*==say "Est-ce votre premier jour de règle ?"
+>*OUI*==jv_pg_ct_enreg_aujourdui_regle
+>*NON*==say "Quelle date j'enregistre"
+>>*==say "$order, ai-je bien compris ?"; date_utilisateur_regle=$order
+>>>*OUI*==jv_pg_ct_enreg_regle_nouvelldate
+>>>*NON*==say "Ok veuillez recommencer depuis le début"
+
+
+
