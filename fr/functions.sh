@@ -456,14 +456,20 @@ calculdiffentredeuxdate_regle_addition="0"
 
 while test  "$lignenumero" != "1"
 do
+
 nbr_ligne_enregistree_regle_lire3=`grep '' $cycle_regles_chemin | sed -n $lignenumero\p` # 2 ligne Num 3
 lignenumero=$(( $lignenumero - 1 ))
+if [ "$lignenumero" = "0" ]; then return; fi
 nbr_ligne_enregistree_regle_lire2=`grep '' $cycle_regles_chemin | sed -n $lignenumero\p` # 1 ligne Num 2
 # Soustrait 2 date pour calculer le nombre de jour entre ces deux
 calculdiffentredeuxdate_regle=`echo $((($(date -d "$nbr_ligne_enregistree_regle_lire3" +%s)-$(date -d "$nbr_ligne_enregistree_regle_lire2" +%s))/86400))`
 # echo "-- différence entre les dates : $calculdiffentredeuxdate_regle"
 calculdiffentredeuxdate_regle_addition=$(( $calculdiffentredeuxdate_regle_addition + $calculdiffentredeuxdate_regle ))
+
 done
+
+
+
 # calcul la moyenne de jour entre plusieurs chiffre
 let calculdiffentredeuxdate_regle_addition="$calculdiffentredeuxdate_regle_addition / $(( $nbr_ligne_enregistree_regle - 1 ))"
 # echo "-- la moyenne = $calculdiffentredeuxdate_regle_addition"
