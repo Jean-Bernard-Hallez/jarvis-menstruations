@@ -549,3 +549,21 @@ mpack -s "Résumé du cycle menstruel: " $cycleemail_chemin "$votreemail_cycle"
 sudo rm $cycleemail_chemin
 say "Votre Cylce menstruel a été envoyer par Email à $votreemail_cycle"
 }
+
+jv_pg_ct_envoicyvleesms() {
+fichier_existe_regle
+On_est_le_regle
+calculdeovulation
+erreur_ligne_vide_regle
+resultat_date_regle
+cycle_moyen_regle
+cheminacces_regle
+
+cycleemail_cheminok_cycle=`echo "Dernière règle le: $derniere_date_regle_long. Prochaine prévue vers le $resultat_proch_regle_long. Votre choix avoir des enfants ? $Souhait_Enfant, attention Ovulation vers $resultat_ovulation_long "`
+
+
+./jarvis.sh -x "MESSEXTERNE; $nom_sms_cycle; $cycleemail_cheminok_cycle"
+
+say "Votre Cylce menstruel a été envoyer par SMS  $nom_sms_cycle"
+}
+

@@ -37,6 +37,8 @@ UseTLS=YES
 
 Et c'est ptêt... à votre lit !! lol
 
+PS: Si vous avez le plugins 'jarvis-FREE-sms' vous pourrez envoyer un rapport sur votre téléphone mobile
+
 ## Languages
 
 * Français
@@ -62,6 +64,9 @@ Jarvis: Allez-y, vous avez de la marge pendant 08 jours, soit jusqu'au jeudi 13 
 
 You: quel est mon cycle moyen ?
 Jarvis: Votre cylce moyen enregistré actuellement est de 28 jours
+
+You: Envoie mon cycle par sms (ou Email)
+Jarvis: Cycle envoyé par SMS (ou Email)
 
 You: enregistre mes règles
 Jarvis: Est-ce votre premier jour de règle ?
