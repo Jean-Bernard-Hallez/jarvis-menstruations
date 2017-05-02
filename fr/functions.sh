@@ -15,7 +15,6 @@ encore_jour_regle=`date -d @$encore_jour_regle "+%d"`
 say "Vos Prochaines règles devraient être dans environ $encore_jour_regle jours soit vers le $resultat_proch_regle_long"
 }
 
-
 cheminacces_regle() {
 cycleemail_chemin="/home/pi/jarvis/plugins_installed/jarvis-menstruations/cycleemail.txt"
 cycle_regles_chemin="/home/pi/jarvis/plugins_installed/jarvis-menstruations/date_cycle_regles.txt"
