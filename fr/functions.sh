@@ -34,7 +34,6 @@ Test_date_aujourdhui_regle_long=`date "+%A %d %B %Y"`
 Test_date_aujourdhui_regle_sec=`date +%s`
 derniere_date_regle_sec=`date -d "$derniere_date_regle_court" +%s`
 
-
 # "Votre période de fertilité sera maximale du $fertilite_min_long au $fertilite_max_long."
 if [ "$Souhait_Enfant" = "oui" ]; then
 
@@ -95,7 +94,6 @@ say "Votre Prochaine Ovulation devrait être dans $encore_jour_regle jours, vers
 if [ "$Souhait_Enfant" = "oui" ]; then
 echo "Votre période de fertilité sera maximale du $fertilite_min_long au $fertilite_max_long. En effet, c'est pendant cette période que vos rapports ont le plus de chance d’être fécondants."
 else
-# echo "Vous ne souhaites pas avoir d'enfant donc ne faites surtout pas l'amour sans protection entre le $fertilite_min_long au $fertilite_max_long"
 echo "Vous ne souhaites pas avoir d'enfant donc faites l'amour depuis les dernières règles le $derniere_date_regle_long jusqu'au `date -d "$fertilite_min_court -2 days" "+%A %d %B %Y"`"
 echo "puis, vous le pourrez à nouveau après le `date -d "$fertilite_max_court +2 days" "+%A %d %B %Y"` jusqu'au prochaines règles le $resultat_proch_regle_long"
 fi
