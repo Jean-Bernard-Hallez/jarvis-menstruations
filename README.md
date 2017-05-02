@@ -10,6 +10,7 @@ For multi-language plugin:
 - optionally write the Description / Usage sections in several languages
 -->
 ## Description
+(02/05/17 Correction suite modif du "plugins_installed")
 Vous avez envie d'avoir des enfants ou peut-être pas... la contraception vous n'y tenait pas...
 MAIS VOUS AVEZ ENVI DE FAIRE L'AMOUR !!!!
 

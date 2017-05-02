@@ -2,7 +2,6 @@
 # Here you can create functions which will be available from the commands file
 # You can also use here user variables defined in your config file
 
-
 jv_pg_ct_quand_regle() {
 fichier_existe_regle
 On_est_le_regle
@@ -18,9 +17,9 @@ say "Vos Prochaines règles devraient être dans environ $encore_jour_regle jour
 
 
 cheminacces_regle() {
-cycleemail_chemin="/home/pi/jarvis/plugins/jarvis-menstruations/cycleemail.txt"
-cycle_regles_chemin="/home/pi/jarvis/plugins/jarvis-menstruations/date_cycle_regles.txt"
-cyclemoyen_chemin="/home/pi/jarvis/plugins/jarvis-menstruations/cyclemoyen.txt"
+cycleemail_chemin="/home/pi/jarvis/plugins_installed/jarvis-menstruations/cycleemail.txt"
+cycle_regles_chemin="/home/pi/jarvis/plugins_installed/jarvis-menstruations/date_cycle_regles.txt"
+cyclemoyen_chemin="/home/pi/jarvis/plugins_installed/jarvis-menstruations/cyclemoyen.txt"
 }
 
 jv_pg_ct_amour() {
