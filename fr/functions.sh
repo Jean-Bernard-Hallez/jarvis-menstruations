@@ -525,7 +525,7 @@ cheminacces_regle
 fichier_existe_regle
 cycle_moyen_regle
 cyclemoyen_regle=`cat $cyclemoyen_chemin`
-say "Votre cylce moyen enregistré actuellement est de $cyclemoyen_regle jours"
+say "Votre cycle moyen enregistré actuellement est de $cyclemoyen_regle jours"
 }
 
 
