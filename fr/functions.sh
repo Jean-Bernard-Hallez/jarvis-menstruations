@@ -3,16 +3,19 @@
 # You can also use here user variables defined in your config file
 
 jv_pg_ct_quand_regle() {
+# ############################################################
 fichier_existe_regle
+if [[ "$fichierregle" != "gameover" ]]; then
 On_est_le_regle
 calculdeovulation
 erreur_ligne_vide_regle
-resultat_date_regle
 cycle_moyen_regle
 date_utilisateur_regle="$derniere_date_regle_court"
+resultat_date_regle
 encore_jour_regle=$(($derniere_date_regle_court_sec - $date_aujourdhui_regle_sec ))
 encore_jour_regle=`date -d @$encore_jour_regle "+%d"`
 say "Vos Prochaines règles devraient être dans environ $encore_jour_regle jours soit vers le $resultat_proch_regle_long"
+fi
 }
 
 cheminacces_regle() {
@@ -23,6 +26,7 @@ cyclemoyen_chemin="/home/pi/jarvis/plugins_installed/jarvis-menstruations/cyclem
 
 jv_pg_ct_amour() {
 fichier_existe_regle
+if [[ "$fichierregle" != "gameover" ]]; then
 On_est_le_regle
 date_utilisateur_regle=""
 cycle_moyen_regle
@@ -76,11 +80,12 @@ else
 	say "Super vous avez depassé la date critique, vous pouvez faire l'amour pendant $encore_jour_regle jours, et même pendant les règles qui auront lieu vers le $resultat_proch_regle_long"
 	fi
 fi
-
+fi
 }
 
 jv_pg_ct_ovulation() {
 fichier_existe_regle
+if [[ "$fichierregle" != "gameover" ]]; then
 On_est_le_regle
 date_utilisateur_regle=""
 calculdeovulation
@@ -96,6 +101,7 @@ echo "Votre période de fertilité sera maximale du $fertilite_min_long au $fert
 else
 echo "Vous ne souhaites pas avoir d'enfant donc faites l'amour depuis les dernières règles le $derniere_date_regle_long jusqu'au `date -d "$fertilite_min_court -2 days" "+%A %d %B %Y"`"
 echo "puis, vous le pourrez à nouveau après le `date -d "$fertilite_max_court +2 days" "+%A %d %B %Y"` jusqu'au prochaines règles le $resultat_proch_regle_long"
+fi
 fi
 }
 
@@ -158,9 +164,11 @@ echo "Votre période de fertilité sera maximale du $fertilite_min au $fertilite
 jv_pg_ct_enreg_aujourdui_regle() {
 date_utilisateur_regle=`date "+%m/%d/%y"`
 fichier_existe_enreg_regle
+if [[ "$fichierregle" != "gameover" ]]; then
 On_est_le_regle
 # date_utilisateur_regle="$date_cycle_mois_regle_court/$date_cycle_jour_regle/$date_cycle_annee_regle"
 jv_pg_ct_enreg_aujourdui_regle_GO
+fi
 }
 
 jv_pg_ct_enreg_aujourdui_regle_GO() {
@@ -225,6 +233,7 @@ fichier_existe_enreg_regle
 On_est_le_regle
 jv_pg_ct_enreg_aujourdui_regle_GO
 fi
+
 }
 
 
@@ -425,10 +434,10 @@ resultat_date_regle() {
 resultat_ovulation_long=`date -d "$date_utilisateur_regle $ovulation days" "+%A %d %B %Y"`
 resultat_ovulation_court=`date -d "$date_utilisateur_regle $ovulation days" "+%m/%d/%y"`
 resultat_ovulation_sec=`date -d "$resultat_ovulation_court" +%s`
-fertilite_min_long=`date -d "$date_utilisateur_regle $resultat_ovulation_court -4 days" "+%A %d %B %Y"`
-fertilite_max_long=`date -d "$date_utilisateur_regle $resultat_ovulation_court 1 days" "+%A %d %B %Y"`
-fertilite_min_court=`date -d "$date_utilisateur_regle $resultat_ovulation_court -4 days" "+%m/%d/%Y"`
-fertilite_max_court=`date -d "$date_utilisateur_regle $resultat_ovulation_court 1 days" "+%m/%d/%Y"`
+# fertilite_min_long=`date -d "$date_utilisateur_regle $resultat_ovulation_court -4 days" "+%A %d %B %Y"`
+# fertilite_max_long=`date -d "$date_utilisateur_regle $resultat_ovulation_court 1 days" "+%A %d %B %Y"`
+# fertilite_min_court=`date -d "$date_utilisateur_regle $resultat_ovulation_court -4 days" "+%m/%d/%Y"`
+# fertilite_max_court=`date -d "$date_utilisateur_regle $resultat_ovulation_court 1 days" "+%m/%d/%Y"`
 
 resultat_proch_regle_long=`date -d "$date_utilisateur_regle $cyclemoyen_regle days" "+%A %d %B %Y"`
 resultat_proch_regle_court=`date -d "$date_utilisateur_regle $cyclemoyen_regle days" "+%m/%d/%y"`
@@ -471,12 +480,13 @@ let calculdiffentredeuxdate_regle_addition="$calculdiffentredeuxdate_regle_addit
 # echo "-- la moyenne = $calculdiffentredeuxdate_regle_addition"
 echo "$calculdiffentredeuxdate_regle_addition" > $cyclemoyen_chemin
 derniere_date_regle_court=`grep '' $cycle_regles_chemin | sed -n $nbr_ligne_enregistree_regle\p`
-derniere_date_regle_court_sec=`date -d "$derniere_date_regle_court_sec" +%s`
+derniere_date_regle_court_sec=`date -d "$derniere_date_regle_court" +%s`
 derniere_date_regle_long=`date -d "$derniere_date_regle_court" "+%A %d %B %Y"`
 
 }
 
 fichier_existe_enreg_regle() {
+cheminacces_regle
 if [ -f "$cycle_regles_chemin" ]; then # Si le fichier existe ? Remise à 0 du compteur si 2 fois Off
 cyclemoyen_regle=`cat $cyclemoyen_chemin`
 else
@@ -493,10 +503,11 @@ fi
 fichier_existe_regle() {
 cheminacces_regle
 if [ -f "$cycle_regles_chemin" ]; then # Si le fichier existe ? Remise à 0 du compteur si 2 fois Off
+fichierregle=""
 return
 else
+fichierregle="gameover"
 say "Je ne peux rien évaluer car je n'ai aucune base de donnée... Veuillez commencer par exécuter la commande: Jarvis enregistre mes règles"
-exit
 fi
 }
 
@@ -504,6 +515,7 @@ fi
 jv_pg_ct_liste_regle() {
 cheminacces_regle
 fichier_existe_regle
+if [[ "$fichierregle" != "gameover" ]]; then
 nbr_ligne_enregistree_regle=`grep -n  '' $cycle_regles_chemin | wc -w`
 say "vous avez enregistré $nbr_ligne_enregistree_regle dates le: "
 lignenumero=$nbr_ligne_enregistree_regle
@@ -517,20 +529,23 @@ date_cycle_anne_regle=`echo "$nbr_ligne_enregistree_regle_lire_voix" | cut -d"/"
 say "$date_cycle_jour_regle $date_cycle_mois_regle_long 20$date_cycle_anne_regle"
 lignenumero=$(( $lignenumero -1 ))
 done
-
+fi
 }
 
 jv_pg_ct_cylemoyen_regle() {
 cheminacces_regle
 fichier_existe_regle
+if [[ "$fichierregle" != "gameover" ]]; then
 cycle_moyen_regle
 cyclemoyen_regle=`cat $cyclemoyen_chemin`
 say "Votre cycle moyen enregistré actuellement est de $cyclemoyen_regle jours"
+fi
 }
 
 
 jv_pg_ct_envoicyvleemail() {
 fichier_existe_regle
+if [[ "$fichierregle" != "gameover" ]]; then
 On_est_le_regle
 calculdeovulation
 erreur_ligne_vide_regle
@@ -544,22 +559,60 @@ echo "Votre choix avoir des enfants: $Souhait_Enfant" >> $cycleemail_chemin
 mpack -s "Résumé du cycle menstruel: " $cycleemail_chemin "$votreemail_cycle"
 sudo rm $cycleemail_chemin
 say "Votre Cylce menstruel a été envoyer par Email à $votreemail_cycle"
+fi
 }
 
 jv_pg_ct_envoicyvleesms() {
+if jv_plugin_is_enabled "jarvis-FREE-sms"; then
+say "Est-ce que je vous envoie le détail du cycle par sms à $(jv_pg_ct_ilyanom) ou personne ?";
+else
+say "vous n'avez pas le plugin jarvis free sms pour faire cela... annulation";
+GOTOSORTIPRET="Fin";
+return;
+fi
+}
+
+jv_pg_ct_envoicyvleesms1() {
 fichier_existe_regle
-On_est_le_regle
-calculdeovulation
-erreur_ligne_vide_regle
-resultat_date_regle
-cycle_moyen_regle
-cheminacces_regle
+if [[ "$fichierregle" != "gameover" ]]; then
 
-cycleemail_cheminok_cycle=`echo "Dernière règle le: $derniere_date_regle_long. Prochaine prévue vers le $resultat_proch_regle_long. Votre choix avoir des enfants ? $Souhait_Enfant, attention Ovulation vers $resultat_ovulation_long "`
+	if jv_plugin_is_enabled "jarvis-FREE-sms"; then
+
+		if [[ "$order" =~ "personn" ]]; then
+		say "Ok, annulation...";
+		return; 
+		fi	
+
+	jv_pg_ct_verinoms;
+	
+		if [[ "$PNOM" == "" ]]; then
+		return;
+		fi
+
+	say "Voilà je fais partir votre cycle menstruel par sms à $PNOM."
+	commands="$(jv_get_commands)"
+
+	cheminacces_regle
+	On_est_le_regle
+	calculdeovulation
+	erreur_ligne_vide_regle
+	cycle_moyen_regle
+	date_utilisateur_regle="$derniere_date_regle_court"
+	resultat_date_regle
+
+	cycleemail_cheminok_cycle="Dernière règle le: $derniere_date_regle_long. avec un cyle moyen de $cyclemoyen_regle jours, prochaine prévue vers le $resultat_proch_regle_long. Votre choix avoir des enfants ? $Souhait_Enfant, attention Ovulation vers $resultat_ovulation_long "
+
+	commands="$(jv_get_commands)"
+	jv_handle_order "MESSEXTERNE ; $PNOM ; $cycleemail_cheminok_cycle";
+	# ./jarvis.sh -x "MESSEXTERNE; $nom_sms_cycle; $cycleemail_cheminok_cycle";
+	return;
+	fi
 
 
-./jarvis.sh -x "MESSEXTERNE; $nom_sms_cycle; $cycleemail_cheminok_cycle"
+else
+say "vous n'avez pas le plugin jarvis free sms pour faire cela... annulation";
+return;
+fi
 
-say "Votre Cylce menstruel a été envoyer par SMS  $nom_sms_cycle"
 }
 

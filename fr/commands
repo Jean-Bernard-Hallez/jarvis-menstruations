@@ -1,9 +1,10 @@
-*PROCHAINE*REGLE*==jv_pg_ct_quand_regle
+*PROCHAINE*REGLE*==jv_pg_ct_quand_regle || jv_continue
 *FAI*AMOUR*==jv_pg_ct_amour
 *LISTE*REGLE*==jv_pg_ct_liste_regle
 *CYCLE*MOYEN*==jv_pg_ct_cylemoyen_regle
 *ENVOI*CYCLE*MAIL*==jv_pg_ct_envoicyvleemail
 *ENVOI*CYCLE*SMS*==jv_pg_ct_envoicyvleesms
+>(*)==jv_pg_ct_envoicyvleesms1
 *PROCHAINE OVULATION*==jv_pg_ct_ovulation
 *ENREGISTRE*REGLE*==say "Est-ce votre premier jour de règle ?"
 >*OUI*==jv_pg_ct_enreg_aujourdui_regle
